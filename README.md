@@ -47,7 +47,7 @@ Our pre-trained models can be downloded here: [Models](https://drive.google.com/
 		--test_path: the test features used for the recognition model;  
   
 ## Performance
-| (%)         | ZShot     |  LShot n=1  | LShot n=5 | LShot n=10  |  LShot n=20  |  ALL @50   |  ALL @100  |
+| (%) VG        | ZShot     |  LShot n=1  | LShot n=5 | LShot n=10  |  LShot n=20  |  ALL @50   |  ALL @100  |
 | ------ |:------:|:------:|:------:|:------:|:------:|:------:|:------:|
 | Paper     |     19.0     |     20.9     |     24.0     |     27.1     |     30.0     |     63.7     |     64.0     |  
 | This repo |     19.1     |     21.9     |     25.1     |     27.9     |     30.5     |     64.1     |     64.4     |  
