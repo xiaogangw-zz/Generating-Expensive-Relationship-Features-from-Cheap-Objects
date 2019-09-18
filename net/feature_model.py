@@ -21,7 +21,7 @@ def w2v_encoder(dim_G,feature_1,keep_prob,reuse=False,name="Generator",training=
         out=slim.dropout(out, keep_prob, is_training=training,scope='dropout2')
         return out
 
-def ST_encoder(dim_G,feature_1,keep_prob,reuse=False,name="Generator",training=False):
+def ST_encoder_nouse(dim_G,feature_1,keep_prob,reuse=False,name="Generator",training=False):
     with tf.variable_scope(name+"/encoder", reuse=reuse):
         inputs = feature_1
         inputs = slim.fully_connected(inputs, dim_G, activation_fn=tf.nn.leaky_relu)
@@ -30,7 +30,7 @@ def ST_encoder(dim_G,feature_1,keep_prob,reuse=False,name="Generator",training=F
         out=slim.dropout(out, keep_prob,is_training=training, scope='dropout2')
         return out
 
-def ST_decoder(dim_D,out_dim,feature_1,feature_2,keep_prob,wordvector=None,reuse=False,name='Generator',training=False):
+def ST_decoder_nouse(dim_D,out_dim,feature_1,feature_2,keep_prob,wordvector=None,reuse=False,name='Generator',training=False):
     with tf.variable_scope(name+'/decoder', reuse=reuse):
         if wordvector==None:
             inputs = tf.concat([feature_1,feature_2], 1)
@@ -125,7 +125,7 @@ def feed_pure_data(input_data):
 
 
 
-def linear_delta(input, output_dim, name=None, stddev=0.01):
+def linear_func(input, output_dim, name=None, stddev=0.01):
     with tf.variable_scope(name or 'linear'):
         w_init = tf.random_normal_initializer(stddev=stddev)
         b_init = tf.constant_initializer(0.0)
@@ -136,22 +136,22 @@ def linear_delta(input, output_dim, name=None, stddev=0.01):
 def lrelu(x, leak=0.2, name="lrelu"):
     return tf.maximum(x, leak * x)
 
-def ST_encoder_delta(dim_G, feature_1, keep_prob, reuse=False, name="Generator", training=False):
+def ST_encoder(dim_G, feature_1, keep_prob, reuse=False, name="Generator", training=False):
     with tf.variable_scope(name + "/encoder", reuse=reuse):
         inputs = feature_1
         inputs = tf.nn.dropout(inputs, keep_prob)
-        inputs = linear_delta(inputs, dim_G, name='1')
+        inputs = linear_func(inputs, dim_G, name='1')
         inputs = tf.nn.dropout(lrelu(inputs), keep_prob)
-        out = linear_delta(inputs, 16, name='2')
+        out = linear_func(inputs, 16, name='2')
         return out
 
-def ST_decoder_delta(dim_D,out_dim,feature_1,feature_2,keep_prob,wordvector=None,reuse=False,name='Generator',training=False):
+def ST_decoder(dim_D,out_dim,feature_1,feature_2,keep_prob,wordvector=None,reuse=False,name='Generator',training=False):
     with tf.variable_scope(name+'/decoder', reuse=reuse):
         if wordvector==None:
             inputs = tf.concat([feature_1,feature_2], 1)
         else:
             inputs = tf.concat([feature_1,feature_2,wordvector], 1)
-        inputs = linear_delta(inputs, dim_D, name='1')
+        inputs = linear_func(inputs, dim_D, name='1')
         inputs=tf.nn.dropout(lrelu(inputs), keep_prob)
-        out = linear_delta(inputs, out_dim, name='2')
+        out = linear_func(inputs, out_dim, name='2')
         return out

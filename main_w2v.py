@@ -86,8 +86,8 @@ def run(args):
 
         ### generated predicate features ###
         pre_w2v=w2v_encoder(dim_G,pre_vector,keep_prob,reuse=False,training=train_flag)
-        bottle_z=ST_encoder_delta(dim_G,feature_1,keep_prob,reuse=False,training=train_flag)
-        reconstruction=ST_decoder_delta(dim_D,args.output_dimension,bottle_z,pre_w2v,keep_prob,reuse=False,training=train_flag)
+        bottle_z=ST_encoder(dim_G,feature_1,keep_prob,reuse=False,training=train_flag)
+        reconstruction=ST_decoder(dim_D,args.output_dimension,bottle_z,pre_w2v,keep_prob,reuse=False,training=train_flag)
         # errL1= tf.reduce_mean(tf.abs(reconstruction - feature_3))
         errL1 = tf.reduce_mean(tf.losses.absolute_difference(reconstruction, feature_3, reduction=tf.losses.Reduction.NONE))
         if args.ac_weight > 0:

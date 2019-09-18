@@ -20,7 +20,7 @@ def parse_args():
     parser.add_argument('--train_dir', dest='train_dir', type=str,default='data_files/vg/all_train_single_relation_random_5.h5')
     parser.add_argument('--out_dir', dest='out_dir', type=str, default='checkpoints/GenerationModel/vg/wholedata/')
     parser.add_argument('--test_setting', dest='test_setting', type=str, default='wholedata')   #  lowshot  wholedata
-    parser.add_argument('--directory', dest='directory', type=str, default='main_delta')
+    parser.add_argument('--directory', dest='directory', type=str, default='main')
     parser.add_argument('--L1_weight', dest='L1_weight', type=float, default=100.0)  # 1000
     parser.add_argument('--gpu', dest='gpu_id', type=str, default='0')
     parser.add_argument('--num_predicates', dest='num_predicates', type=int, default=100)
@@ -81,8 +81,8 @@ def run(args):
         real_labels=tf.placeholder(tf.int32, [None, ], 'real_labels')
 
         ### generated predicate features ###
-        bottle_z = ST_encoder_delta(dim_G, feature_1, keep_prob, reuse=False, training=train_flag)
-        reconstruction = ST_decoder_delta(dim_D,1000, bottle_z, feature_2, keep_prob, reuse=False, training=train_flag)
+        bottle_z = ST_encoder(dim_G, feature_1, keep_prob, reuse=False, training=train_flag)
+        reconstruction = ST_decoder(dim_D,1000, bottle_z, feature_2, keep_prob, reuse=False, training=train_flag)
         errL1 = tf.reduce_mean(tf.losses.absolute_difference(reconstruction, feature_3, reduction=tf.losses.Reduction.NONE))
         if args.ac_weight > 0:
             ac_loss = aux_classifier(reconstruction, real_labels, args.num_predicates, keep_prob, reuse=False, training=train_flag)
