@@ -42,10 +42,6 @@ class VTranse(object):
 		self.out_feature = out_feature
 		self.concat_feature = tf.placeholder(tf.float32, shape=[None, out_feature * 2])
 
-		# self.sub_fea = tf.placeholder(tf.float32, shape=[None, 500])
-		# self.obj_fea = tf.placeholder(tf.float32, shape=[None, 500])
-		# self.rela_label = tf.placeholder(tf.int32, shape=[None, ])
-
 		if not train_feature:
 			self.build_dete_network()#vgg_16
 		self.build_rd_network(train_feature)
@@ -154,19 +150,6 @@ class VTranse(object):
 			ob_fc1 = slim.fully_connected(ob_fc, self.out_feature, activation_fn=tf.nn.relu, scope='RD_ob_fc1')
 			self.layers['sub_fc1'] = sub_fc1
 			self.layers['obj_fc1'] = ob_fc1
-		#
-		# dif_fc1 = ob_fc1 - sub_fc1 # here the ob_fc1 and sub_fc1 are the features of obj and sub
-		# rela_score = slim.fully_connected(dif_fc1, self.num_predicates, activation_fn=None, scope='RD_fc2')
-
-		# res_1 = slim.fully_connected(self.concat_feature, 128, activation_fn=tf.nn.relu, scope='RD_fc0')
-		# res_1 = dropout(res_1, self.keep_prob)
-		# rela_score = slim.fully_connected(res_1, self.num_predicates, activation_fn=None, scope='RD_fc2')
-
-		# res_1 = slim.fully_connected(self.concat_feature, 256, activation_fn=tf.nn.relu, scope='RD_fc0')
-		# res_1 = dropout(res_1, self.keep_prob)
-		# res_1 = slim.fully_connected(res_1, 128, activation_fn=tf.nn.relu, scope='RD_fc1')
-		# res_1 = dropout(res_1, self.keep_prob)
-		# rela_score = slim.fully_connected(res_1, self.num_predicates, activation_fn=None, scope='RD_fc2')
 
 		res_1 = slim.fully_connected(self.concat_feature, 512, activation_fn=None,scope='RD_fc0')  # ,weights_regularizer=slim.l2_regularizer(1e-4)
 		res_1 = tf.nn.softplus(res_1)
