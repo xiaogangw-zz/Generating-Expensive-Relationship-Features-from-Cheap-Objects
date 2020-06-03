@@ -53,9 +53,9 @@ Our pre-trained models can be downloded here: [Models](https://drive.google.com/
 | This repo |     19.1     |     21.9     |     25.1     |     27.9     |     30.5     |     64.1     |     64.4     |  
 
 ## Citation
-@inproceedings{Wang_2019_Generating,  
-&nbsp;&nbsp;&nbsp;&nbsp;      author    = {Xiaogang Wang, Qianru Sun, Tat-Seng Chua, Marcelo H Ang Jr},  
-&nbsp;&nbsp;&nbsp;&nbsp;      title     = {Generating Expensive Relationship Featuresfrom Cheap Objects},  
+@inproceedings{wang2019generating,  
+&nbsp;&nbsp;&nbsp;&nbsp;      author    = {Wang, Xiaogang and Sun, Qianru and ANG, Marcelo and CHUA, Tat-Seng},  
+&nbsp;&nbsp;&nbsp;&nbsp;      title     = {Generating expensive relationship features from cheap objects},  
 &nbsp;&nbsp;&nbsp;&nbsp;      booktitle = {BMVC},  
 &nbsp;&nbsp;&nbsp;&nbsp;      year      = {2019},  
 }
